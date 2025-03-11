@@ -1,0 +1,96 @@
+/*finished product fiallyyy*/
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+.wheel-container {
+    position: relative;
+    width: 800px;
+    height: 800px;
+}
+
+.wheel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+
+.wheel-large {
+    width: 800px;
+    height: 800px;
+    z-index: 1;
+    background: conic-gradient(
+        #2970db 0% 12.5%, 
+        #3179cc 12.5% 25%, 
+        #1976D2 25% 37.5%, 
+        #1E88E5 37.5% 50%, 
+        #2196F3 50% 62.5%, 
+        #42A5F5 62.5% 75%, 
+        #64B5F6 75% 87.5%, 
+        #90CAF9 87.5% 100%
+    );
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.wheel-medium {
+    width: 530px;
+    height: 530px;
+    z-index: 2;
+    background: conic-gradient(
+        #007fe0 0% 12.5%, 
+        #008bdb 12.5% 25%, 
+        #0288D1 25% 37.5%, 
+        #039BE5 37.5% 50%, 
+        #03A9F4 50% 62.5%, 
+        #29B6F6 62.5% 75%, 
+        #4FC3F7 75% 87.5%, 
+        #58c5f8 87.5% 100%
+    );
+    
+}
+
+
+.wheel-small {
+    width: 200px;
+    height: 200px;
+    z-index: 3;
+    background: conic-gradient(
+        #0D47A1 0% 25%, 
+        #1976D2 25% 50%, 
+        #2196F3 50% 75%, 
+        #64B5F6 75% 100%
+    );
+    
+}
+
+.section-divider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0.2);
+    transform-origin: left center;
+    z-index: 10;
+}
+
+.section-label {
+    position: absolute;
+    background-color: transparent;
+    color: black;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+
+    white-space: nowrap;
+}
