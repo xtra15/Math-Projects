@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>untitled for now</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="wheel-container">
+        <!-- largarrs wheel 8 sections too- -->
+        <div class="wheel wheel-large" id="large-wheel"></div>
+        
+        <!-- Medium wheel 8 sections too-->
+        <div class="wheel wheel-medium" id="medium-wheel"></div>
+        
+        <!-- smallest wheel 4 wheel-->
+        <div class="wheel wheel-small" id="small-wheel"></div>
+    </div>
+
+    <script>
+        // create section and the label apa ntah
+        function createWheelSections(wheelId, numSections, radius, labels, fontSize, labelRadiusPercent) {
+            const wheel = document.getElementById(wheelId);
+            const angleStep = 360 / numSections;
+            
+            for (let i = 0; i < numSections; i++) {
+                // Create divider
+                const divider = document.createElement('div');
+                divider.className = 'section-divider';
+                divider.style.width = radius + 'px';
+                divider.style.transform = `rotate(${i * angleStep}deg)`;
+                wheel.appendChild(divider);
+                
+                // Cal label pos
+                const labelAngle = (i * angleStep) + (angleStep / 2);
+                const labelRadius = radius * labelRadiusPercent;
+                const labelRadian = (labelAngle * Math.PI) / 180;
+                const x = 50 + (Math.cos(labelRadian) * labelRadius / (radius * 2) * 100);
+                const y = 50 + (Math.sin(labelRadian) * labelRadius / (radius * 2) * 100);
+                
+                // Create the label
+                const label = document.createElement('div');
+                label.className = 'section-label';
+                const labelText = labels[i % labels.length]; // Use modulo to handle cases where labels array is shorter
+                const words = labelText.split(' ');
+                label.textContent = words.length > 3 ? words.slice(0, 3).join(' ') + '\n' + words.slice(3).join(' ') : labelText;
+                label.style.whiteSpace = 'pre-line';
+                label.style.left = `${x}%`;
+                label.style.top = `${y}%`;
+                label.style.fontSize = `${fontSize}px`;
+                wheel.appendChild(label);
+            }
+        }
+        
+        // random sh
+        const smallWheelLabels = ['x', '÷', '+', '-'];
+        const mediumWheelLabels = ['Huruf Darab Huruf', 'Huruf Darab No, No Darab Huruf', 'Huruf Bahagi Huruf', 'Huruf bahagi no, no Bahagi Huruf', 'Sebutan Serupa', 'Sebutan Tak Serupa', 'Sebutan Serupa', 'Sebutan Tak Serupa'];
+        const largeWheelLabels = ['idk1', 'idk2', 'idk3', 'idk4', 'idk5', 'idk6', 'idk7', 'idk8'];
+
+        createWheelSections('small-wheel', 4, 100, smallWheelLabels, 28, 0.6);
+        createWheelSections('medium-wheel', 8, 250, mediumWheelLabels, 15, 0.75);
+        createWheelSections('large-wheel', 8, 400, largeWheelLabels, 18, 0.8);
+    </script>
+</body>
+</html>
