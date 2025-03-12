@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>untitled for now</title>
+    <title>Interactive Wheel System</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         @media (max-width: 480px) {
@@ -12,6 +12,10 @@
             }
             .section-label {
                 font-size: 14px !important;
+            }
+            .modal-content {
+                width: 80% !important;
+                max-width: 300px !important;
             }
         }
         @media (min-width: 481px) and (max-width: 768px) {
@@ -22,23 +26,235 @@
                 font-size: 18px !important;
             }
         }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .section-label {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #000;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        .nested-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .nested-modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            max-width: 500px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .content-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .content-box:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: black;
+        }
+
+        .modal-title {
+            margin-top: 0;
+            color: #2970db;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-body {
+            margin: 15px 0;
+        }
+
+        /* Make section labels clickable */
+        .clickable-label {
+            cursor: pointer;
+            transition: transform 0.2s, text-shadow 0.2s;
+            padding: 5px;
+        }
+
+        .clickable-label:hover {
+           
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
     </style>
 </head>
 <body>
     <div class="wheel-container">
-        <!-- largarrs wheel 8 sections too- -->
+        <!-- Large wheel 8 sections -->
         <div class="wheel wheel-large" id="large-wheel"></div>
         
-        
-        <!-- Medium wheel 8 sections too-->
+        <!-- Medium wheel 8 sections -->
         <div class="wheel wheel-medium" id="medium-wheel"></div>
         
-        <!-- smallest wheel 4 wheel-->
+        <!-- Small wheel 8 sections -->
         <div class="wheel wheel-small" id="small-wheel"></div>
     </div>
 
+    <!-- Modal Template -->
+    <div id="section-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="modal-title" id="modal-title">Section Title</h2>
+            <div class="modal-body" id="modal-body">
+                <div id="modal-content"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // create section and the label apa ntah
+        // edit/define ig modal content for each section of the large wheel
+        const sectionContent = {
+            "Section 1": {
+                title: "Section 1 - Huruf Darab Huruf",
+                content: `
+                    <h3>Pilih</h3>
+                    <div class="content-box" onclick="openNestedModal('Huruf Sama', 'test')">Huruf Sama</div>
+                    <div class="content-box" onclick="openNestedModal('Huruf Tak Sama', 'test')">Huruf Tak Sama</div>
+                    
+                `
+            },
+            "Section 2": {
+                title: "Section 2 - Huruf darab no, No darab huruf",
+                content: `
+                   <h3>Penjelasan</h3>
+                           Tulis nombor atau hasil darab nombor diikuti huruf
+
+                           Contoh : -3 x y²
+                           Jawapan : -3y²
+                `
+            },
+            "Section 3": {
+                title: "Section 3 - Huruf Bahagi Huruf",
+                content: `
+                    <h3>Language Learning</h3>
+                    <div class="content-box" onclick="openNestedModal('Huruf Sama', '
+                    Tolak kuasa 
+                     Contoh : m⁸ ÷ m⁵
+                     Jawapan : m⁸-⁵ = m³
+                    
+                    
+                    .')">Huruf Bahagi Huruf</div>
+                    <div class="content-box" onclick="openNestedModal('Huruf tak sama', 'test')">Huruf tak sama</div>
+                   
+                `
+            },
+            "Section 4": {
+                title: "Section 4 - Huruf Bahagi no, No bahagi huruf",
+                content: `
+                    <h3>Penjelasan</h3>
+                    nil
+                    
+                `
+            },
+            "Section 5": {
+                title: "Section 5 - Sebutan Serupa",
+                content: `
+                    <h3>Penjelasan</h3>
+                    Jumlahkan nombor diikuti huruf.
+                    (TEKAN KALKULATOR)
+                  Contoh : 3x + 5x
+                  Jawapan : 8x
+                `
+            },
+            "Section 6": {
+                title: "Section 6 - Sebuan Tak Serupa",
+                content: `
+                    <h3>Penjelasan</h3>
+                    Salin balik soalan yang diberikan
+                    Contoh : 8x + 5y
+                    Jawapan : 8x + 5y
+                   
+                `
+            },
+            "Section 7": {
+                title: "Sebutan Tak Serupa",
+                content: `
+                     <h3>Penjelasan</h3>
+                  Tolakkan nombor diikuti huruf
+                  (TEKAN KALKULATOR)
+                  
+                  Contoh : 12x - 7x
+                  Jawapan : 5x
+                
+                `
+            },
+            "Section 8": {
+                title: "Section 8 - Sebutan Tak Serupa",
+                content: `
+                    <h3>Penjelasan</h3>
+                    Salin balik soalan yang diberikan
+                    Contoh : 12x - x²
+                    Jawapan : 12x - x²
+                        
+                `
+            }
+        };
+
+        // Create things
         function createWheelSections(wheelId, numSections, radius, labels, fontSize, labelRadiusPercent) {
             const wheel = document.getElementById(wheelId);
             const angleStep = 360 / numSections;
@@ -61,27 +277,179 @@
                 // Create the label
                 const label = document.createElement('div');
                 label.className = 'section-label';
-                const labelText = labels[i % labels.length]; // Use modulo to handle cases where labels array is shorter
+                const labelText = labels[i % labels.length]; // Use modulo to handle cases where labels array is shorter ik the name is cool
                 const words = labelText.split(' ');
                 label.textContent = words.length > 3 ? words.slice(0, 3).join(' ') + '\n' + words.slice(3).join(' ') : labelText;
                 label.style.whiteSpace = 'pre-line';
                 label.style.left = `${x}%`;
                 label.style.top = `${y}%`;
                 label.style.fontSize = `${fontSize}px`;
+                
+                // For large wheel, make text clickable
+                if (wheelId === 'large-wheel') {
+                    label.className += ' clickable-label';
+                    label.addEventListener('click', () => openModal(labelText));
+                }
+                
                 wheel.appendChild(label);
             }
         }
         
-        // random sh
-        const smallWheelLabels = ['x', '÷', '+', '÷','+', '+', '-', '-'];
-        const mediumWheelLabels = ['Huruf Darab Huruf', 'Huruf Darab No, No Darab Huruf', 'Huruf Bahagi Huruf', 'Huruf bahagi no, no Bahagi Huruf', 'Sebutan Serupa', 'Sebutan Tak Serupa', 'Sebutan Serupa', 'Sebutan Tak Serupa'];
-        const largeWheelLabels = ['idk1', 'idk2', 'idk3', 'idk4', 'idk5', 'idk6', 'idk7', 'idk8'];
+        // Modal elements
+        const modal = document.getElementById('section-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const closeBtn = document.querySelector('.close-btn');
+        
+        // Open modal with section content
+        function openModal(sectionName, customContent = null) {
+            const section = sectionContent[sectionName] || {
+                title: sectionName,
+                content: `<p>Content for ${sectionName} will be available soon.</p>`,
+                buttons: []
+            };
 
+            // Clear previous content
+            modalContent.innerHTML = '';
+
+            // Set modal title
+            modalTitle.textContent = section.title;
+
+            // Add custom content if provided
+            if (customContent) {
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = customContent.replace(/\n/g, '<br>');
+                modalContent.appendChild(contentDiv);
+            } else {
+                // Add default content
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = section.content.replace(/\n/g, '<br>');
+                modalContent.appendChild(contentDiv);
+            }
+
+            // Add buttons if any
+            if (section.buttons && section.buttons.length > 0) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.marginTop = '20px';
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.gap = '10px';
+                buttonContainer.style.flexWrap = 'wrap';
+
+                section.buttons.forEach(button => {
+                    const btn = document.createElement('button');
+                    btn.textContent = button.label;
+                    btn.style.padding = '8px 16px';
+                    btn.style.borderRadius = '4px';
+                    btn.style.border = 'none';
+                    btn.style.backgroundColor = '#2970db';
+                    btn.style.color = 'white';
+                    btn.style.cursor = 'pointer';
+                    btn.addEventListener('click', () => {
+                        openModal(button.targetSection, button.content);
+                    });
+                    buttonContainer.appendChild(btn);
+                });
+                modalContent.appendChild(buttonContainer);
+            }
+
+            // Show modal
+            modal.style.display = 'block';
+        }
+        
+        // Close modal
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Define wheel data
+        const smallWheelLabels = ['x', 'x', '÷', '÷', '+', '+', '-', '-'];
+        const mediumWheelLabels = ['Huruf Darab Huruf', 'Huruf Darab No, No Darab Huruf', 'Huruf Bahagi Huruf', 'Huruf bahagi no, no Bahagi Huruf', 'Sebutan Serupa', 'Sebutan Tak Serupa', 'Sebutan Serupa', 'Sebutan Tak Serupa'];
+        const largeWheelLabels = ['Section 1', 'Section 2', 'Section 3', 'Section 4', 'Section 5', 'Section 6', 'Section 7', 'Section 8'];
+
+        // Create the wheels
         createWheelSections('small-wheel', 8, 100, smallWheelLabels, 28, 0.6);
         createWheelSections('medium-wheel', 8, 250, mediumWheelLabels, 15, 0.75);
         createWheelSections('large-wheel', 8, 400, largeWheelLabels, 18, 0.8);
-
-        
     </script>
+</body>
+</html>
+
+<style>
+    /* Add these styles to your existing CSS */
+    .content-box {
+        background-color: #f5f5f5;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .content-box:hover {
+        background-color: #e0e0e0;
+    }
+
+    .nested-modal {
+        display: none;
+        position: fixed;
+        z-index: 101;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    .nested-modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        max-width: 500px;
+        border-radius: 8px;
+        position: relative;
+    }
+</style>
+
+<!-- Nested Modal Template -->
+<div id="nested-modal" class="nested-modal">
+    <div class="nested-modal-content">
+        <span class="close-btn" onclick="document.getElementById('nested-modal').style.display='none'">&times;</span>
+        <h2 class="modal-title" id="nested-modal-title">Nested Modal Title</h2>
+        <div class="modal-body">
+            <div id="nested-modal-content" style="white-space: pre-line;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to open nested modal
+    function openNestedModal(title, content) {
+        document.getElementById('nested-modal-title').textContent = title;
+        document.getElementById('nested-modal-content').innerHTML = content.split('\n').join('<br>');
+        document.getElementById('nested-modal').style.display = 'block';
+    }
+
+    // Function to close nested modal
+    function closeNestedModal() {
+        document.getElementById('nested-modal').style.display = 'none';
+    }
+
+    // Close nested modal when clicking outside
+    window.onclick = function(event) {
+        let nestedModal = document.getElementById('nested-modal');
+        if (event.target == nestedModal) {
+            nestedModal.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>
