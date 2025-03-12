@@ -19,6 +19,20 @@ body, html {
     height: 800px;
 }
 
+@media only screen and (max-width: 768px) {
+    .wheel-container {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .wheel-container {
+        width: 300px;
+        height: 300px;
+    }
+}
+
 .wheel {
     position: absolute;
     top: 50%;
@@ -57,6 +71,29 @@ body, html {
     .wheel-small {
         width: 100px;
         height: 100px;
+    }
+    .section-label {
+        font-size: 14px;
+        padding: 3px 6px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .wheel-large {
+        width: 300px;
+        height: 300px;
+    }
+    .wheel-medium {
+        width: 200px;
+        height: 200px;
+    }
+    .wheel-small {
+        width: 75px;
+        height: 75px;
+    }
+    .section-label {
+        font-size: 12px;
+        padding: 2px 4px;
     }
 }
 
@@ -122,6 +159,24 @@ body, html {
 }
 
 /* Highlight effect for clickable sections */
+.clickable-section {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
 .clickable-section:hover {
     background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (hover: none) {
+    .clickable-section {
+        padding: 15px;
+    }
+    .clickable-section:hover {
+        background-color: transparent;
+    }
+    .clickable-section:active {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
 }
