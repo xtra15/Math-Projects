@@ -140,8 +140,56 @@
             text-decoration: none;
         }
     </style>
+<style>
+    .help-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: #2970db;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        z-index: 99;
+    }
+
+    .help-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+</style>
 </head>
 <body>
+    <button class="help-button" onclick="openHelpModal()">?</button>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeHelpModal()">&times;</span>
+            <h2 class="modal-title">=info</h2>
+            <div class="modal-body">
+                <h3>info:</h3>
+                <ol style="line-height: 1.6">
+                    <li>Untuk Mobile pergi ke : diatas kanan screen dan bukak tapak  dekstop</li>
+                    <li>Klik pada mana-mana bahagian dalam roda luar yang besar untuk melihat penjelasan </li>
+                    
+                </ol>
+                <h3>...</h3>
+                <ul style="line-height: 1.6">
+                    
+                    
+
+                    <li>Website ini masih dalam penambahbaikan... </li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
     <div class="wheel-container" ontouchstart="">
         <!-- Large wheel 8 sections -->
         <div class="wheel wheel-large" id="large-wheel"></div>
@@ -444,11 +492,37 @@
 
     // Close nested modal when clicking outside
     window.onclick = function(event) {
+        let helpModal = document.getElementById('help-modal');
         let nestedModal = document.getElementById('nested-modal');
-        if (event.target == nestedModal) {
+        let sectionModal = document.getElementById('section-modal');
+        
+        if (event.target == helpModal) {
+            helpModal.style.display = 'none';
+        } else if (event.target == nestedModal) {
             nestedModal.style.display = 'none';
+        } else if (event.target == sectionModal) {
+            sectionModal.style.display = 'none';
         }
     }
+
+    // Help Modal Functions
+    function openHelpModal() {
+        document.getElementById('help-modal').style.display = 'block';
+    }
+
+    function closeHelpModal() {
+        document.getElementById('help-modal').style.display = 'none';
+    }
+
+    // Add event listeners for all close buttons
+    document.querySelectorAll('.close-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            let modal = this.closest('.modal, .nested-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
 </script>
 </body>
 </html>
