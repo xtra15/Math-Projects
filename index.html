@@ -5,11 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>untitled for now</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        @media (max-width: 480px) {
+            .wheel-container {
+                transform: scale(0.6);
+            }
+            .section-label {
+                font-size: 14px !important;
+            }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+            .wheel-container {
+                transform: scale(0.8);
+            }
+            .section-label {
+                font-size: 18px !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="wheel-container">
         <!-- largarrs wheel 8 sections too- -->
         <div class="wheel wheel-large" id="large-wheel"></div>
+        
         
         <!-- Medium wheel 8 sections too-->
         <div class="wheel wheel-medium" id="medium-wheel"></div>
@@ -32,7 +51,7 @@
                 divider.style.transform = `rotate(${i * angleStep}deg)`;
                 wheel.appendChild(divider);
                 
-                // Cal label pos
+                // Calculate label position
                 const labelAngle = (i * angleStep) + (angleStep / 2);
                 const labelRadius = radius * labelRadiusPercent;
                 const labelRadian = (labelAngle * Math.PI) / 180;
@@ -54,13 +73,15 @@
         }
         
         // random sh
-        const smallWheelLabels = ['x', '÷', '+', '-'];
+        const smallWheelLabels = ['x', '÷', '+', '÷','+', '+', '-', '-'];
         const mediumWheelLabels = ['Huruf Darab Huruf', 'Huruf Darab No, No Darab Huruf', 'Huruf Bahagi Huruf', 'Huruf bahagi no, no Bahagi Huruf', 'Sebutan Serupa', 'Sebutan Tak Serupa', 'Sebutan Serupa', 'Sebutan Tak Serupa'];
         const largeWheelLabels = ['idk1', 'idk2', 'idk3', 'idk4', 'idk5', 'idk6', 'idk7', 'idk8'];
 
-        createWheelSections('small-wheel', 4, 100, smallWheelLabels, 28, 0.6);
+        createWheelSections('small-wheel', 8, 100, smallWheelLabels, 28, 0.6);
         createWheelSections('medium-wheel', 8, 250, mediumWheelLabels, 15, 0.75);
         createWheelSections('large-wheel', 8, 400, largeWheelLabels, 18, 0.8);
+
+        
     </script>
 </body>
 </html>
