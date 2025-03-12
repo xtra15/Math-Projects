@@ -1,4 +1,4 @@
-/*finished product fiallyyy*/
+/*test product fiallyyy*/
 body {
     display: flex;
     justify-content: center;
@@ -7,6 +7,10 @@ body {
     margin: 0;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
+}
+
+body, html {
+  overflow: hidden;
 }
 
 .wheel-container {
@@ -41,6 +45,21 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+@media only screen and (max-width: 768px) {
+    .wheel-large {
+        width: 400px;
+        height: 400px;
+    }
+    .wheel-medium {
+        width: 265px;
+        height: 265px;
+    }
+    .wheel-small {
+        width: 100px;
+        height: 100px;
+    }
+}
+
 .wheel-medium {
     width: 530px;
     height: 530px;
@@ -70,6 +89,14 @@ body {
         #64B5F6 75% 100%
     );
     
+}
+
+
+@media only screen and (max-width: 768px) {
+    .rotating-image {
+        width: 400px;
+        height: 400px;
+    }
 }
 
 .section-divider {
