@@ -164,15 +164,17 @@ body, html {
     position: absolute;
     background-color: transparent;
     color: black;
-    padding: 4px 8px;
+    padding: 8px 12px;
     border-radius: 4px;
     font-weight: bold;
     transform: translate(-50%, -50%);
-    z-index: 12;
+    z-index: 15;
     white-space: nowrap;
-    pointer-events: auto;
+    pointer-events: none;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .clickable-section {
@@ -180,7 +182,10 @@ body, html {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     position: relative;
-    z-index: 10;
+    z-index: 20;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px;
 }
 
 .clickable-section:hover {
