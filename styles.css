@@ -60,6 +60,7 @@ body, html {
         width: 400px;
         height: 400px;
         transform: scale(0.8);
+        touch-action: none;
     }
     .wheel-large {
         width: 400px;
@@ -75,12 +76,18 @@ body, html {
     }
     .section-label {
         font-size: 16px;
-        padding: 3px 6px;
-        transform: translate(-50%, -50%) scale(1);
+        padding: 8px 12px;
+        transform: translate(-50%, -50%) scale(1.2);
         white-space: nowrap;
         max-width: 120px;
         overflow: hidden;
         text-overflow: ellipsis;
+        z-index: 15;
+    }
+    .clickable-section {
+        min-height: 44px;
+        min-width: 44px;
+        z-index: 20;
     }
 }
 
@@ -172,6 +179,8 @@ body, html {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    position: relative;
+    z-index: 10;
 }
 
 .clickable-section:hover {
