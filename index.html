@@ -2,7 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script>
+    // Add touch event handling for better mobile interaction
+    document.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        handleInteraction(touch.clientX, touch.clientY);
+    }, { passive: false });
+
+    document.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        handleInteraction(touch.clientX, touch.clientY);
+    }, { passive: false });
+
+    function handleInteraction(x, y) {
+        // Add interaction logic here
+    }
+</script>
     <title>Interactive Wheel System</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -42,10 +60,10 @@
         .modal-content {
             position: relative;
             background-color: #fefefe;
-            margin: 10% auto;
+            margin: 0;
             padding: 30px;
             border: 1px solid #888;
-            width: 80%;
+            width: 90%;
             max-width: 800px;
             border-radius: 12px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -69,12 +87,12 @@
 
         .nested-modal-content {
             background-color: #fefefe;
-            margin: 10% auto;
-            padding: 30px;
+            margin: 0;
+            padding: 20px;
             border: 1px solid #888;
-            width: 70%;
-            max-width: 700px;
-            border-radius: 12px;
+            width: 50%;
+            max-width: 500px;
+            border-radius: 8px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -84,13 +102,15 @@
         .content-box {
             background-color: #f8f9fa;
             padding: 25px;
-            margin: 15px 0;
+            margin: 15px auto;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid #e9ecef;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             font-size: 16px;
+            max-width: 90%;
+            text-align: center;
         }
 
         .content-box:hover {
@@ -237,11 +257,15 @@
             "Section 3": {
                 title: "Section 3 - Huruf Bahagi Huruf",
                 content: `
-                    <h3>Language Learning</h3>
+                    <h3>Pilih</h3>
                     <div class="content-box" onclick="openNestedModal('Huruf Sama', '
                     Tolak kuasa 
                      Contoh : m⁸ ÷ m⁵
                      Jawapan : m⁸-⁵ = m³
+
+                     Contoh 2: 12p⁷ ÷ 3p²
+                     Jawapan : (12÷3)p⁷-²
+                             =4p³
                     
                     
                     .')">Huruf Bahagi Huruf</div>
@@ -456,13 +480,16 @@
 
     .nested-modal-content {
         background-color: #fefefe;
-        margin: 15% auto;
+        margin: 0;
         padding: 20px;
         border: 1px solid #888;
         width: 50%;
         max-width: 500px;
         border-radius: 8px;
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 </style>
 
